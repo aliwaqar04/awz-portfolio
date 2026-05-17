@@ -20,9 +20,7 @@ const fadeIn = {
 }
 const viewportOpts = { once: false, amount: 0.2 }
 
-// ============================================================================
-// ─── CODE SNIPPET COMPONENT ─────────────────────────────────────────────────
-// ============================================================================
+// ─── Reusable code snippet (used on both mobile and desktop) ────────────────
 function CodeSnippet() {
   return (
     <div
@@ -143,7 +141,7 @@ export default function Hero() {
     <section
       id="hero"
       className="min-h-screen relative bg-cream-100"
-      /* NOTE: overflow-hidden removed from section — it was clipping mobile content */
+    /* NOTE: overflow-hidden removed from section — it was clipping mobile content */
     >
       {/* ── Background decorations ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -280,9 +278,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ============================================================================ */}
-        {/* ─── MOBILE CODE SNIPPET SECTION ──────────────────────────────────────────── */}
-        {/* ============================================================================ */}
+        {/* — MOBILE CODE SNIPPET — */}
         <div id="mobile-code-snippet" style={{ marginBottom: 28 }}>
           <CodeSnippet />
         </div>
@@ -548,17 +544,15 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ============================================================================ */}
-          {/* ─── DESKTOP CODE SNIPPET SECTION (XL ONLY) ────────────────────────────────── */}
-          {/* ============================================================================ */}
+          {/* ── Code snippet (xl only) ── */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={viewportOpts}
             transition={{ duration: 0.7, delay: 0.7 }}
-            className="absolute left-0 z-20 hidden xl:block"
-            style={{ maxWidth: 320, bottom: '-75px' }}
+            className="absolute bottom-2 left-0 z-10 hidden xl:block"
+            style={{ maxWidth: 320 }}
           >
             <CodeSnippet />
           </motion.div>
