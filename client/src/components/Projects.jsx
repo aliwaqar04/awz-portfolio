@@ -165,11 +165,10 @@ export default function Projects() {
                 {/* Animated left border */}
                 <motion.div
                   className="absolute left-0 top-0 bottom-0 w-0.5"
-                  style={{ background: project.color }}
+                  style={{ background: project.color, originY: 0 }}
                   animate={{ scaleY: hovered === project.id ? 1 : 0 }}
                   transition={{ duration: 0.3 }}
                   initial={{ scaleY: 0 }}
-                  style={{ background: project.color, originY: 0 }}
                 />
               </motion.div>
             ))}

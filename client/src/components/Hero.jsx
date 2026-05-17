@@ -20,7 +20,9 @@ const fadeIn = {
 }
 const viewportOpts = { once: false, amount: 0.2 }
 
-// ─── Reusable code snippet (used on both mobile and desktop) ────────────────
+// ============================================================================
+// ─── CODE SNIPPET COMPONENT ─────────────────────────────────────────────────
+// ============================================================================
 function CodeSnippet() {
   return (
     <div
@@ -278,7 +280,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* — MOBILE CODE SNIPPET — */}
+        {/* ============================================================================ */}
+        {/* ─── MOBILE CODE SNIPPET SECTION ──────────────────────────────────────────── */}
+        {/* ============================================================================ */}
         <div id="mobile-code-snippet" style={{ marginBottom: 28 }}>
           <CodeSnippet />
         </div>
@@ -544,15 +548,17 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* ── Code snippet (xl only) ── */}
+          {/* ============================================================================ */}
+          {/* ─── DESKTOP CODE SNIPPET SECTION (XL ONLY) ────────────────────────────────── */}
+          {/* ============================================================================ */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={viewportOpts}
             transition={{ duration: 0.7, delay: 0.7 }}
-            className="absolute bottom-2 left-0 z-20 hidden xl:block"
-            style={{ maxWidth: 320 }}
+            className="absolute left-0 z-20 hidden xl:block"
+            style={{ maxWidth: 320, bottom: '-75px' }}
           >
             <CodeSnippet />
           </motion.div>
