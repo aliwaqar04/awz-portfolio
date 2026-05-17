@@ -99,10 +99,10 @@ VITE_API_URL=https://your-backend-name.onrender.com
 Then update `client/src/components/Contact.jsx`:
 ```js
 // Change this line:
-await axios.post('/api/contact', form)
+await axios.post('/api', form)
 
 // To this for production:
-await axios.post(`${import.meta.env.VITE_API_URL}/api/contact`, form)
+await axios.post(`${import.meta.env.VITE_API_URL}/api`, form)
 ```
 
 ---

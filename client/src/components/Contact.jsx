@@ -41,7 +41,7 @@ export default function Contact() {
 
     setLoading(true)
     try {
-      await axios.post('/api/contact', form)
+      await axios.post('/api', form)
       toast.success('Message sent! I\'ll get back to you soon 🌿')
       setForm(initialForm)
     } catch (err) {

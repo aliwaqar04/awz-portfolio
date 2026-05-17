@@ -1,52 +1,59 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import mongoose from 'mongoose'
-import contactRouter from '../server/routes/contact.js'
+import nodemailer from "nodemailer";
 
-dotenv.config()
-
-const app = express()
-
-// CORS — allow your Vercel frontend URL and localhost for dev
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:5173',
-  'http://localhost:3000',
-].filter(Boolean)
-
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true)
-    if (allowedOrigins.includes(origin)) return callback(null, true)
-    callback(new Error('Not allowed by CORS'))
-  },
-  credentials: true,
-}))
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-// Routes
-app.use('/api/contact', contactRouter)
-
-// Health check
-app.get('/api/health', (_, res) =>
-  res.json({ status: 'ok', message: 'Portfolio API running 🌿' })
-)
-
-// Connect MongoDB once and cache the connection
-let isConnected = false
-const connectDB = async () => {
-  if (isConnected) return
-  await mongoose.connect(process.env.MONGODB_URI)
-  isConnected = true
-  console.log('✅ MongoDB connected')
-}
-
-// Serverless handler — Vercel calls this for every /api/* request
 export default async function handler(req, res) {
-  await connectDB()
-  return app(req, res)
+  // Allow only POST requests
+  if (req.method !== "POST") {
+    return res.status(405).json({
+      success: false,
+      message: "Method not allowed",
+    });
+  }
+
+  try {
+    const { name, email, message } = req.body;
+
+    // Validation
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    // Nodemailer setup
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send email
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      replyTo: email,
+      to: process.env.EMAIL_USER,
+      subject: `Portfolio Contact - ${name}`,
+      text: `
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+      `,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Message sent successfully",
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
 }
