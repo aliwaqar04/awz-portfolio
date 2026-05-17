@@ -441,6 +441,19 @@ export default function Hero() {
                 {personalInfo.location}
               </span>
             </motion.div>
+
+            {/* Code snippet — desktop only, inside left column */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOpts}
+              transition={{ duration: 0.7, delay: 0.7 }}
+              className="hidden xl:block mt-8"
+              style={{ maxWidth: 320 }}
+            >
+              <CodeSnippet />
+            </motion.div>
           </div>
 
           {/* ── RIGHT: Photo + floating stats ── */}
@@ -542,19 +555,6 @@ export default function Hero() {
                 </p>
               </motion.div>
             </div>
-          </motion.div>
-
-          {/* ── Code snippet (xl only) ── */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportOpts}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            className="hidden xl:block"
-            style={{ maxWidth: 320, marginTop: 32 }}
-          >
-            <CodeSnippet />
           </motion.div>
 
         </div>
