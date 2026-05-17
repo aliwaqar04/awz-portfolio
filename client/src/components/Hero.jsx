@@ -551,7 +551,7 @@ export default function Hero() {
             whileInView="visible"
             viewport={viewportOpts}
             transition={{ duration: 0.7, delay: 0.7 }}
-            className="absolute bottom-2 left-0 z-10 hidden xl:block"
+            className="absolute bottom-[-80px] left-0 z-20 hidden xl:block"
             style={{ maxWidth: 320 }}
           >
             <CodeSnippet />
