@@ -13,18 +13,18 @@ export default function Contact() {
   const { ref: leftRef, isInView: leftInView } = useScrollReveal()
   const { ref: rightRef, isInView: rightInView } = useScrollReveal()
 
-  const [form,    setForm]    = useState(initialForm)
-  const [errors,  setErrors]  = useState({})
+  const [form, setForm] = useState(initialForm)
+  const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
 
   const validate = () => {
     const e = {}
-    if (!form.name.trim())                              e.name    = 'Name is required'
-    if (!form.email.trim())                             e.email   = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(form.email))         e.email   = 'Invalid email address'
-    if (!form.subject.trim())                           e.subject = 'Subject is required'
-    if (!form.message.trim())                           e.message = 'Message is required'
-    else if (form.message.trim().length < 20)           e.message = 'Message must be at least 20 characters'
+    if (!form.name.trim()) e.name = 'Name is required'
+    if (!form.email.trim()) e.email = 'Email is required'
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Invalid email address'
+    if (!form.subject.trim()) e.subject = 'Subject is required'
+    if (!form.message.trim()) e.message = 'Message is required'
+    else if (form.message.trim().length < 20) e.message = 'Message must be at least 20 characters'
     return e
   }
 
@@ -41,7 +41,7 @@ export default function Contact() {
 
     setLoading(true)
     try {
-      await axios.post('/api', form)
+      await axios.post('/api/contact', form)
       toast.success('Message sent! I\'ll get back to you soon 🌿')
       setForm(initialForm)
     } catch (err) {
@@ -95,8 +95,8 @@ export default function Contact() {
             {/* Contact details */}
             <div className="space-y-5">
               {[
-                { icon: <FiMail  size={15} />, label: 'Email',    value: personalInfo.email,    href: `mailto:${personalInfo.email}` },
-                { icon: <FiPhone size={15} />, label: 'Phone',    value: personalInfo.phone,    href: `tel:${personalInfo.phone}` },
+                { icon: <FiMail size={15} />, label: 'Email', value: personalInfo.email, href: `mailto:${personalInfo.email}` },
+                { icon: <FiPhone size={15} />, label: 'Phone', value: personalInfo.phone, href: `tel:${personalInfo.phone}` },
                 { icon: <FiMapPin size={15} />, label: 'Location', value: personalInfo.location, href: null },
               ].map(({ icon, label, value, href }, i) => (
                 <motion.div
@@ -113,9 +113,9 @@ export default function Contact() {
                     <p className="font-mono text-xs text-sage-500 mb-0.5">{label}</p>
                     {href
                       ? <a href={href} className="font-body text-sm text-cream-200 hover:text-sage-400 transition-colors flex items-center gap-1 group/link">
-                          {value}
-                          <FiArrowRight size={12} className="opacity-0 group-hover/link:opacity-100 transform group-hover/link:translate-x-1 transition-all" />
-                        </a>
+                        {value}
+                        <FiArrowRight size={12} className="opacity-0 group-hover/link:opacity-100 transform group-hover/link:translate-x-1 transition-all" />
+                      </a>
                       : <p className="font-body text-sm text-cream-200">{value}</p>
                     }
                   </div>
@@ -132,9 +132,9 @@ export default function Contact() {
               <p className="font-mono text-xs text-sage-500 mb-4">Find me on</p>
               <div className="flex gap-3">
                 {[
-                  { icon: <FiGithub   size={18} />, href: personalInfo.github,   label: 'GitHub' },
+                  { icon: <FiGithub size={18} />, href: personalInfo.github, label: 'GitHub' },
                   { icon: <FiLinkedin size={18} />, href: personalInfo.linkedin, label: 'LinkedIn' },
-                  { icon: <FiMail     size={18} />, href: `mailto:${personalInfo.email}`, label: 'Email' },
+                  { icon: <FiMail size={18} />, href: `mailto:${personalInfo.email}`, label: 'Email' },
                 ].map(({ icon, href, label }, i) => (
                   <a
                     key={i}
@@ -245,11 +245,10 @@ export default function Contact() {
                 disabled={loading}
                 whileHover={{ scale: loading ? 1 : 1.01 }}
                 whileTap={{ scale: loading ? 1 : 0.99 }}
-                className={`w-full flex items-center justify-center gap-3 py-4 font-body font-medium text-sm tracking-wide transition-all duration-300 ${
-                  loading
-                    ? 'bg-sage-700 cursor-not-allowed text-sage-300'
-                    : 'bg-sage-600 hover:bg-sage-500 text-white cursor-pointer'
-                }`}
+                className={`w-full flex items-center justify-center gap-3 py-4 font-body font-medium text-sm tracking-wide transition-all duration-300 ${loading
+                  ? 'bg-sage-700 cursor-not-allowed text-sage-300'
+                  : 'bg-sage-600 hover:bg-sage-500 text-white cursor-pointer'
+                  }`}
                 style={{ borderRadius: 2 }}
               >
                 {loading ? (
